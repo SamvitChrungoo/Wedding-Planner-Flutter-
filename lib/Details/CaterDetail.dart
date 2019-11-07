@@ -19,7 +19,7 @@ static List details =[
    
 {
    "img" : "assets/images/cater3.jpg",
-   "name": "Ashirwad Caterers",
+   "name": "Geeky Caterers",
    "rating": "4.0",
    "place": "Delhi",
    "price" : "250",
