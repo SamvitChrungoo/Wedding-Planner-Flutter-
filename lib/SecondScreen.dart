@@ -8,7 +8,8 @@ import 'Widgets/Venue.dart';
 
 class SecondScreen extends StatefulWidget {
   final asset;
-  SecondScreen(this.asset);
+  final pageno;
+  SecondScreen(this.asset,this.pageno);
   @override
   _SecondScreenState createState() => _SecondScreenState();
 }
@@ -18,14 +19,14 @@ class _SecondScreenState extends State<SecondScreen> {
   @override
   Widget build(BuildContext context) {
     if(widget.asset['title']=='Photographers')
-    return Photo(widget.asset);
+    return Photo(widget.asset,widget.pageno);
 
     else if(widget.asset['title']=='Venues')
-    return Venue(widget.asset);
+    return Venue(widget.asset,widget.pageno);
 
      else if(widget.asset['title']=='Invitations')
-    return Invitation(widget.asset);
+    return Invitation(widget.asset,widget.pageno);
 
-    else return Cater(widget.asset);
+    else return Cater(widget.asset,widget.pageno);
       }
 }

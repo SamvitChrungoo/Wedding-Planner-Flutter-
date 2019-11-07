@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
-import 'package:my_app/Home.dart';
+// import 'package:my_app/Login.dart';
+import 'Home.dart';
 import 'Widgets/Animatedlogo.dart';
 
 
@@ -27,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
    controller.forward();            
 
     Timer(
-        Duration(seconds: 1),
+        Duration(seconds: 5),
             () => Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (BuildContext context) => Home())));
   }

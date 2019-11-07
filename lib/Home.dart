@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_multi_carousel/carousel.dart';
-// import 'package:my_app/Widgets/Animatedlogo.dart';
-import 'package:my_app/Widgets/RotatedLogo.dart';
+// import 'package:my_app/Widgets/RotatedLogo.dart';
 import 'Login.dart';
 import 'SecondScreen.dart';
 
@@ -47,25 +47,28 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
 var scaffoldKey = GlobalKey<ScaffoldState>();
- Animation<double> animation;            
-  AnimationController controller; 
-  @override
-  void initState() {
-    super.initState();
-      controller =AnimationController(duration: const Duration(seconds: 10), vsync: this);            
-  animation = Tween<double>(begin: 0.0, end: 100.0).animate(controller);      
+int pageno=0;
+//  Animation<double> animation;            
+//   AnimationController controller; 
+//   @override
+//   void initState() {
+//     super.initState();
+//       controller =AnimationController(duration: const Duration(seconds: 10), vsync: this);            
+//   animation = Tween<double>(begin: 0.0, end: 100.0).animate(controller);      
 
-   controller.forward();  }    
+//    controller.forward();  }    
 
-@override
-void dispose() {            
-controller.dispose();            
-super.dispose();            
- }
+// @override
+// void dispose() {            
+// controller.dispose();            
+// super.dispose();            
+//  }
 
 
 @override
   Widget build(BuildContext context) {
+         timeDilation=2;
+
     return Scaffold(
         key: scaffoldKey,
         drawer: new Drawer(
@@ -154,12 +157,12 @@ super.dispose();
           ),
         ),
 
-        child: Column(
+        child: ListView(
           children: <Widget>[
    Padding(
      padding: const EdgeInsets.only(top:50,bottom: 20),
     //  child: Icon(Icons.blur_on,size:100,color: Colors.white,),
-    child: RotatedLogo(animation: animation),
+    // child: RotatedLogo(animation: animation),
    ),
    Padding(
      padding: const EdgeInsets.only(bottom:40.0),
@@ -169,7 +172,7 @@ super.dispose();
          borderRadius: BorderRadius.all(Radius.elliptical(30, 30))),
        child: Padding(
          padding: const EdgeInsets.all(10),
-         child: Text("Wedding Planner",style: TextStyle(fontSize: 40,color: Colors.white,fontWeight: FontWeight.w600,fontFamily:'DancingScript'),),
+         child: Text("Wedding Planner",textAlign: TextAlign.center,style: TextStyle(fontSize: 40,color: Colors.white,fontWeight: FontWeight.w600,fontFamily:'DancingScript'),),
        ))
      ,
    ),
@@ -180,23 +183,31 @@ Carousel(
             indicatorType: "bar",
             axis: Axis.horizontal,
             showIndicator: false,
+            currentPage: pageno,
+           onPageChange : (index) {
+            pageno = index;
+        },
+            
             
            children: HomeDetails.det.map((asset) {
                 return GestureDetector(
                   onTap: (){
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) => SecondScreen(asset)));
+                    Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => SecondScreen(asset,pageno)));
                 },
                   child: Column(
                     children: <Widget>[
                       Expanded(
-                        child: (Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(asset['img']),
-                                fit: BoxFit.cover,),
-                          )
-                              )),
+                        child: Hero(
+                          tag: asset['img'],
+                          child: (Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(asset['img']),
+                                  fit: BoxFit.cover,),
+                            )
+                                )),
+                        ),
                       ),
                   Container(
                   height: 50,
@@ -222,9 +233,9 @@ Carousel(
 
  Padding(
    padding: const EdgeInsets.only(bottom:15.0,top:30),
-   child: Text("We help you to plan your",style:TextStyle(color: Colors.white,fontSize: 35,fontFamily: 'DancingScript')),
+   child: Text("We help you to plan your",textAlign: TextAlign.center,style:TextStyle(color: Colors.white,fontSize: 35,fontFamily: 'DancingScript')),
  ),
- Text("\"Dream Wedding\"",style:TextStyle(color: Colors.white,fontSize: 45,fontFamily: 'DancingScript',fontWeight: FontWeight.w600))
+ Text("\"Dream Wedding\"",textAlign: TextAlign.center,style:TextStyle(color: Colors.white,fontSize: 45,fontFamily: 'DancingScript',fontWeight: FontWeight.w600))
 
  ]),
 ),
